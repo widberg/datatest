@@ -436,6 +436,9 @@ pub fn runner(tests: &[&dyn TestDescriptor]) {
     }
 
     // Run tests via standard runner!
+    #[cfg(feature = "rustc_test_TestList")]
+    let rendered = crate::rustc_test::TestList::new(rendered, crate::rustc_test::TestListOrder::Unsorted);
+
     match crate::rustc_test::run_tests_console(&opts, rendered) {
         Ok(true) => {}
         Ok(false) => panic!("Some tests failed"),
